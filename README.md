@@ -1,17 +1,17 @@
-# CS143-SP26-P3
+# CS143-SP26-P4
 Course: CS143 – Artificial Intelligence (Spring 2026)
 
 Instructor: Md Alimoor Reza, Assistant Professor of Computer Science, Drake University
 
-Due: Tuesday, March 10, 11:59 PM
+Due: Tuesday, April 7, 11:59 PM
 Total: 10 points
 
-## AI Problem Solving with Informed (Heuristic) Search Algorithms
+## Adversarial Search for Connect-Four Game
 
 The goal of this assignment is to solve an AI problem using informed search techniques such as A* Search, and Greedy Best-First Search. Similar to your previous project, you will work with an AI agent that interacts with a simulated street network environment built on a real-world street map.
 
 <p align="center">
-  <img src="mapbot.png" alt="Agent on Open Street Map" width="200"/>
+  <img src="connect_four.png" alt="Connect Four Game" width="200"/>
 </p>
 You will complete the implementation of two informed search strategies: <b>A* Search</b> and <b>Greedy Best-First Search</b>. Note that incomplete implementations for both algorithms are provided. Your task is to finish these implementations by filling in the missing components and completing all associated tasks.
 Your implementation may rely on several useful data structures, such as <i>deque, set</i>, and <i>priority queue</i>. In class, we have already practiced the basic functionalities of these data structures. Here are the links to the scripts we worked on in class, which might be helpful:
