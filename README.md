@@ -6,41 +6,52 @@ Instructor: Md Alimoor Reza, Assistant Professor of Computer Science, Drake Univ
 Due: Tuesday, April 7, 11:59 PM
 Total: 10 points
 
-## Adversarial Search for Connect-Four Game
+## Solving Connect-Four Game with Adversarial Search
 
-The goal of this assignment is to solve an AI problem using informed search techniques such as A* Search, and Greedy Best-First Search. Similar to your previous project, you will work with an AI agent that interacts with a simulated street network environment built on a real-world street map.
+The goal of this assignment is to solve an AI problem using **adversarial search** techinques such as **minimax algorithm** and ***α-β* prunning**. You will work with an AI agent that interacts with a simulated textual environment.
 
 <p align="center">
   <img src="connect_four.png" alt="Connect Four Game" width="200"/>
 </p>
-You will complete the implementation of two informed search strategies: <b>A* Search</b> and <b>Greedy Best-First Search</b>. Note that incomplete implementations for both algorithms are provided. Your task is to finish these implementations by filling in the missing components and completing all associated tasks.
-Your implementation may rely on several useful data structures, such as <i>deque, set</i>, and <i>priority queue</i>. In class, we have already practiced the basic functionalities of these data structures. Here are the links to the scripts we worked on in class, which might be helpful:
+You will complete the implementation of: <b>minimax algorithm</b>. Note that incomplete implementations is provided as a skeleton. Your task is to finish the implementation by filling in the missing components and completing all associated tasks. Your code must be in the format supplied. That
+is, you need to implement the following functions exactly (or with a small modification) as input in the
+starter code:
 <ul>
-  <li> <a href="https://github.com/alimoorreza/CS143-sp26-notes/blob/main/deque_python_datastructure.ipynb"> Deque </a>    
-  <li> <a href="https://github.com/alimoorreza/CS143-sp26-notes/blob/main/set_python_datastructure.ipynb"> Set </a>    
-  <li> <a href="https://github.com/alimoorreza/CS143-sp26-notes/blob/main/priority_queue_python_datastructure_reza_solution.ipynb"> Priority Queue</a>
+  <li> <a href=""> def actions(self, state): </a>    
+  <li> <a href=""> def result(self, state, move, player): </a>      
 </ul>
+If you significantly alter these function headers or do not use these functions, your code will receive 0 points.
+You are welcome to search the internet for assistance with the assignment. Be sure to give full credit for any
+code cited. However, the foundation of the starter code must be utilized. The assignment is to implement
+the minimax algorithm, not simply copy another implementation.
 
-## Tasks
-Complete and run both A* Search and Greedy Best-First Search on two copies of the same map, and then display the routes to see the different routes that were found (they may be similar depending on the map and locations). Make sure the displayed maps are visible in the notebook you submit.
-
-> You should complete the exercises and then perform a comparative analysis using the table below. First, use the source location with `location_id` **160854122** and the goal location with `location_id` **160855919**. This table should help you organize and compare your results for the given destination node in the Des Moines map.
-
-
-
-| **Informed search method**     | **Number of nodes along the path**| **Number of nodes expanded**  | **Time took** |
-|---------------|--------------------|----------------|----------------|
-| greedy\_best\_first           |                    |                   |                |
-| a_star         |                    |                |                   |
+## Task 1 (4 points)
+Implement the **minimax algorithm**, including implementing a simple utility function that will reward a “win”
+with a positive number and a loss with a negative number. All other configurations should return a 0.
 
 
-> You should redo a similar comparative analysis using the table below. This time, keep the source location as `location_id` **160854122**, but choose a different goal location (e.g., `location_id` **160834040**). Then, organize and report your results for that goal node in the Des Moines map.
+## Task 2 (3 points)
+Implement a depth parameter that will terminate the search a return the utility function. Completing the
+above requirements should provide enough to allow the computer to play a reasonably interactive game with
+a depth of 4, that will block an opponent when it is about to win.
+
+## Task 3 (3 points)
+Implement ***α-β* prunning**. You should include in your submission evidence that your implementation
+is effective. For example, supply a description (or timings) that you are able to run your program with a
+deeper depth that you could without the alpha-beta pruning implementation.
+
+## Extra credit (1 point)
+Implement a more sophisticated utility function that provides improved performance in your program.
 
 
-| **Informed search method**     | **Number of nodes along the path**| **Number of nodes expanded**  | **Time took** |
-|---------------|--------------------|----------------|----------------|
-| greedy\_best\_first           |                    |                   |                |
-| a_star         |                    |                |                   |
+
+> You should do a comparative analysis using the table below. Organize and report your results:
+
+
+| **Adversarial search**     | **Number of nodes**| **Number   **  | **Time took** |
+|----------------------------|--------------------|----------------|---------------|
+| minimax                    |                    |                |               |
+| alpha-beta prunning        |                    |                |               |
 
 
 Also include a text/Markdown cell that addresses the following points:
