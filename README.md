@@ -45,7 +45,7 @@ a depth of 4, that will block an opponent when it is about to win. If you manage
 should be able to play with the AI opponent and here is a sample output on the terminal:
 
 <p align="center">
-  <img src="sample_output.png" alt="Connect Four Game" width="200"/>
+  <img src="sample_output.png" alt="Connect Four Game" width="400"/>
 </p>
 
 ## Task 3 (3 points)
