@@ -114,8 +114,6 @@ class ConnectFourGame(Game) :
     
     def result(self, state, move, player):
         """Return the state that results from making a move from a state."""
-        # you should modify your state[][] list and then return the modified one
-        # your code
         row = self.get_next_open_row(state, move)
         state[row][move] = player
         return state
@@ -123,10 +121,15 @@ class ConnectFourGame(Game) :
 
     def utility(self, state, player):
         """Return the value of this final state to player."""
-        # your code
-        # ...
-        # ...
-        # ...
+        opponent = self.get_opposite_player(player)
+        playerWin = self.winning_move(state, player) #true if player wins otherwise false
+        opponentWin = self.winning_move(state, opponent) #true if opponent wins otherwise false
+
+        if playerWin:
+            return 1000
+        elif opponentWin:
+            return -1000
+        return 0
 
 
     def get_opposite_player(self,player):
