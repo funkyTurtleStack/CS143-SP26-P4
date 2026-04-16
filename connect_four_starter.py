@@ -8,12 +8,14 @@ NUMBER_OF_RECURSIVE_CALLS = 1
 
 class ConnectFourGame(Game) :
 
+    """Creates the starting board"""
     def __init__(self) :
         # initialize the starting board
         self.initial = [['.'] * NUMBER_OF_COLS for _ in range(NUMBER_OF_ROWS)]
 
 
 
+    """Returns True if there is a win state for the given piece"""
     def winning_move(self, board, piece):
         # Check horizontal locations for win
         for c in range(NUMBER_OF_COLS - 3):
@@ -29,14 +31,14 @@ class ConnectFourGame(Game) :
                     c] == piece:
                     return True
 
-        # Check positively sloped diaganols
+        # Check positively sloped diagonals
         for c in range(NUMBER_OF_COLS - 3):
             for r in range(NUMBER_OF_ROWS - 3):
                 if board[r][c] == piece and board[r + 1][c + 1] == piece and board[r + 2][c + 2] == piece and \
                         board[r + 3][c + 3] == piece:
                     return True
 
-        # Check negatively sloped diaganols
+        # Check negatively sloped diagonals
         for c in range(NUMBER_OF_COLS - 3):
             for r in range(3, NUMBER_OF_ROWS):
                 if board[r][c] == piece and board[r - 1][c + 1] == piece and board[r - 2][c + 2] == piece and \
@@ -102,21 +104,22 @@ class ConnectFourGame(Game) :
         # returns list of numbers corresponding to possible moves
         valid_locations = []
         # your code
-        # ...
-        # ...
-        # ...        
+        a = 0
+        while a <= NUMBER_OF_COLS:
+            if(self.is_valid_location(state, a)):
+                valid_locations += [a]
+            a += 1
         return valid_locations
 
-
+    
     def result(self, state, move, player):
         """Return the state that results from making a move from a state."""
         # you should modify your state[][] list and then return the modified one
         # your code
-        # ...
-        # ...
-        # ...                
+        row = self.get_next_open_row(state, move)
+        state[row][move] = player
         return state
-
+    
 
     def utility(self, state, player):
         """Return the value of this final state to player."""
@@ -216,3 +219,5 @@ class ConnectFourGame(Game) :
 game = ConnectFourGame()
 game.play(game.initial)
 
+#Reference
+'''self.initial[row][column]'''
