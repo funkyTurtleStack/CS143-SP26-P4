@@ -1,9 +1,11 @@
 from Game import *
 import pdb
+import copy
+import time
 
 NUMBER_OF_ROWS            = 6
 NUMBER_OF_COLS            = 7
-NUMBER_OF_RECURSIVE_CALLS = 1
+NUMBER_OF_RECURSIVE_CALLS = 0
 
 
 class ConnectFourGame(Game) :
@@ -94,7 +96,7 @@ class ConnectFourGame(Game) :
         return state
 
 
-
+    '''Checks if the game is over'''
     def terminal_test(self, state):
         return self.winning_move(state, "x") or self.winning_move(state, "o") or len(self.actions(state)) == 0
 
@@ -105,7 +107,7 @@ class ConnectFourGame(Game) :
         valid_locations = []
         # your code
         a = 0
-        while a <= NUMBER_OF_COLS:
+        while a < NUMBER_OF_COLS:
             if(self.is_valid_location(state, a)):
                 valid_locations += [a]
             a += 1
@@ -114,9 +116,10 @@ class ConnectFourGame(Game) :
     
     def result(self, state, move, player):
         """Return the state that results from making a move from a state."""
-        row = self.get_next_open_row(state, move)
-        state[row][move] = player
-        return state
+        newState = copy.deepcopy(state)
+        row = self.get_next_open_row(newState, move)
+        newState[row][move] = player
+        return newState
     
 
     def utility(self, state, player):
@@ -140,43 +143,86 @@ class ConnectFourGame(Game) :
             return 'x'
     
 
-    def minimax(self, state, player, depth=0):
-
-        # HINT: call self.terminal_test() and or check depth
-        # your code
-        # ...
-        # ...
-
+    def minimaxAB(self, state, player, depth=0, alpha=-100000, beta=100000):
+        #for testing 
+        global NUMBER_OF_RECURSIVE_CALLS
+        NUMBER_OF_RECURSIVE_CALLS += 1
 
         bestMove = -1
 
+        # check if game is over
+        if self.terminal_test(state) or depth == 0:
+            return self.utility(state, player), bestMove
+
         # maximizing player (in our setup it's the AI)
         if player == 'o':
-
             best = -100000
-            # your code
-            # ...
-            # ...
-            # ...
+            for move in self.actions(state):
+                newState = self.result(state, move, player)
+                score, movePlaceHolder = self.minimaxAB(newState, self.get_opposite_player(player), depth - 1, alpha, beta)
+                if score > best:
+                    best = score
+                    bestMove = move
+                alpha = max(alpha, best)
+                if beta <= alpha:
+                    break
 
-
+        # minimizing player (in our setup it's human player)
         else:
-
-            # minimizing player (in our setup it's human player)
             best = 1000000
-            # your code
-            # ...
-            # ...
-            # ...
-
+            for move in self.actions(state):
+                newState = self.result(state, move, player)
+                score, movePlaceHolder = self.minimaxAB(newState, self.get_opposite_player(player), depth - 1, alpha, beta)
+                if score < best:
+                    best = score
+                    bestMove = move
+                beta = min(beta, best)
+                if beta <= alpha:
+                    break
 
         return best, bestMove
 
+
+    def minimax(self, state, player, depth=0):
+        #for testing 
+        global NUMBER_OF_RECURSIVE_CALLS
+        NUMBER_OF_RECURSIVE_CALLS += 1
+
+        bestMove = -1
+
+        # check if game is over
+        if self.terminal_test(state) or depth == 0:
+            return self.utility(state, player), bestMove
+
+        # maximizing player (in our setup it's the AI)
+        if player == 'o':
+            best = -100000
+            for move in self.actions(state):
+                newState = self.result(state, move, player)
+                score, movePlaceHolder = self.minimax(newState, self.get_opposite_player(player), depth - 1)
+                if score > best:
+                    best = score
+                    bestMove = move
+
+        # minimizing player (in our setup it's human player)
+        else:
+            best = 1000000
+            for move in self.actions(state):
+                newState = self.result(state, move, player)
+                score, movePlaceHolder = self.minimax(newState, self.get_opposite_player(player), depth - 1)
+                if score < best:
+                    best = score
+                    bestMove = move
+
+        return best, bestMove
 
 
     def play(self, state):
         game_over = False
         turn = 1
+        global NUMBER_OF_RECURSIVE_CALLS
+        call_counts = []
+        times = []
         while not game_over:
             self.display(state)
             if turn == 1:
@@ -196,7 +242,13 @@ class ConnectFourGame(Game) :
             else:
 
                 print("AI")
+                NUMBER_OF_RECURSIVE_CALLS = 0
+                start = time.time()
                 val, col = self.minimax(state, "o", depth=4)
+                end = time.time()
+                call_counts.append(NUMBER_OF_RECURSIVE_CALLS)
+                times.append(end - start)
+                print(f"Calls: {NUMBER_OF_RECURSIVE_CALLS}, Time: {end - start:.2f}s")
 
 
                 #global NUMBER_OF_RECURSIVE_CALLS
@@ -215,6 +267,9 @@ class ConnectFourGame(Game) :
             if self.terminal_test(state):
                 game_over = True
         self.display(state)
+        if call_counts:
+            print(f"\nAverage calls per turn: {sum(call_counts)/len(call_counts):.0f}")
+            print(f"Average time per turn: {sum(times)/len(times):.2f}s")
 
 
 # 2 player game
